@@ -32,6 +32,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
+        <p>All Communities</p>
         <img src={logo} className="App-logo" alt="logo" />
         <button onClick={() => postDataTemplate()}>click to post</button>
         <button onClick={() => getDataTemplate()}>click to get</button>
