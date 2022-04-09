@@ -48,7 +48,7 @@ def data():
             username = data['username']
             password = data['password']
             dataDict = {
-                'id': str(id),
+                '_id': str(id),
                 'username': username,
                 'password': password,
             }
@@ -66,7 +66,7 @@ def user_from_id(id):
         username = data['username']
         password = data['password']
         dataDict = {
-            'id': str(id),
+            '_id': str(id),
             'username': username,
             'password': password,
         }
@@ -111,7 +111,7 @@ def find_username(username):
         username = data['username']
         password = data['password']
         dataDict = {
-            'id': str(id),
+            '_id': str(id),
             'username': username,
             'password': password,
         }
@@ -133,7 +133,7 @@ def login(username, inputted_password):
         if (inputted_password != password):
             return 'WRNG'
         dataDict = {
-            'id': str(id),
+            '_id': str(id),
             'username': username,
             'password': password,
         }

@@ -55,7 +55,7 @@ function CreateAccount() {
     axios.get('api/users/username/' + username + '/' + password)
       .then((response: any) => {
         console.log(response);
-        navigate('/timeline/' + response.data.id);
+        navigate('/timeline/' + response.data._id);
       })
       .catch((_: any) => {
         console.log('ERROR');
