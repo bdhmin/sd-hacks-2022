@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './login.css';
 
 function Login() {
 
+  let navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [canLogin, setCanLogin] = useState(true);
@@ -15,11 +17,13 @@ function Login() {
     console.log('Got password', password);
     axios.get('api/users/username/' + username + '/' + password)
       .then((response: any) => {
+        console.log(response);
         if (response.data == 'DNE' || response.data == 'WRNG') {
           console.log('rejected, input is wrong');
           setCanLogin(false);
         } else {
           setCanLogin(true);
+          navigate('/timeline/' + response.data.id);
         }
       })
       .catch((_: any) => {

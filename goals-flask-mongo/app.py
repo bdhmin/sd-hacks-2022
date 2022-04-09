@@ -98,6 +98,26 @@ def user_from_id(id):
         print('\n # Update successful # \n')
         return jsonify({'status': 'Data id: ' + id + ' is updated!'})
 
+@app.route('/api/users/username/<string:username>', methods=['GET'])
+def find_username(username):
+
+    # GET a specific data by username
+    if request.method == 'GET':
+        data = db['users'].find_one({'username': username})
+        print('received data', data)
+        if (data == None):
+            return 'DNE'
+        id = data['_id']
+        username = data['username']
+        password = data['password']
+        dataDict = {
+            'id': str(id),
+            'username': username,
+            'password': password,
+        }
+        print(dataDict)
+        return jsonify(dataDict)
+
 @app.route('/api/users/username/<string:username>/<string:inputted_password>', methods=['GET'])
 def login(username, inputted_password):
 
