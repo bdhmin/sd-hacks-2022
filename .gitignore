@@ -1,2 +1,4 @@
 # file that contains access to database
 /goals-flask-mongo/database.yaml
+
+*.pyc

@@ -4,6 +4,7 @@ from bson.objectid import ObjectId
 from flask_cors import CORS
 import yaml
 import certifi
+from blueprints.blueprint_template import blueprint_template
 
 ca = certifi.where()
 app = Flask(__name__)
@@ -12,6 +13,8 @@ client = MongoClient(config['uri'], tlsCAFile=ca)
 # db = client.lin_flask
 db = client['test']
 CORS(app)
+
+app.register_blueprint(blueprint_template, url_prefix='/api/blu-template')
 
 @app.route('/')
 def index():
