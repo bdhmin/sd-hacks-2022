@@ -6,7 +6,7 @@ import './App.css';
 function App() {
 
   function getDataTemplate() {
-    axios.get('/users')
+    axios.get('/api/users')
       .then((response: any) => {
         console.log(response);
       })
@@ -16,7 +16,7 @@ function App() {
   }
 
   function postDataTemplate() {
-    axios.post('/users', {
+    axios.post('/api/users', {
       firstName: 'John',
       lastName: 'Doe',
       emailId: 'email@email.com'

@@ -15,7 +15,7 @@ CORS(app)
 def index():
     return render_template('home.html')
 
-@app.route('/users', methods=['POST', 'GET'])
+@app.route('/api/users', methods=['POST', 'GET'])
 def data():
     
     # POST a data to database
@@ -56,7 +56,7 @@ def data():
         print(dataJson)
         return jsonify(dataJson)
 
-@app.route('/users/<string:id>', methods=['GET', 'DELETE', 'PUT'])
+@app.route('/api/users/<string:id>', methods=['GET', 'DELETE', 'PUT'])
 def onedata(id):
 
     # GET a specific data by id
