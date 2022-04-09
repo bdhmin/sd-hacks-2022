@@ -9,7 +9,7 @@ function CreateAccount() {
   function postNewUser() {
     const newUser: User = {
       username: 'bdmin',
-      password: 'yomama',
+      password: 'yoyoma',
       // descriptionParagraph: 'I am determined to follow through with my goals using this app.',
       // tags: [],
       // goals: [],
