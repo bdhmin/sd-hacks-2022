@@ -43,7 +43,7 @@ function App() {
         <Routes>
           <Route path='/' element={ <Landing/> }/>
           <Route path='/create-account' element={ <CreateAccount/> }/>
-          <Route path='/timeline' element={ <Timeline/> }/>
+          <Route path='/timeline/:userId' element={ <Timeline/> }/>
         </Routes>
       </Router>
     </div>
