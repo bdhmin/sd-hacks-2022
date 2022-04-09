@@ -3,12 +3,14 @@ from pymongo import MongoClient
 from bson.objectid import ObjectId
 from flask_cors import CORS
 import yaml
+import certifi
 
+ca = certifi.where()
 app = Flask(__name__)
 config = yaml.safe_load(open('database.yaml'))
-client = MongoClient(config['uri'])
+client = MongoClient(config['uri'], tlsCAFile=ca)
 # db = client.lin_flask
-db = client['knf-dev']
+db = client['test']
 CORS(app)
 
 @app.route('/')
