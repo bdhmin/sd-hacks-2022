@@ -1,7 +1,11 @@
 import React from 'react';
-import logo from './logo.svg';
 import axios from 'axios';
 import './App.css';
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+
+import Landing from './app/main/landing/landing';
+import Timeline from './app/main/timeline/timeline';
+import CreateAccount from './app/user-setup/create-account/create-account';
 
 function App() {
 
@@ -30,13 +34,18 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>All Communities</p>
-        <img src={logo} className="App-logo" alt="logo" />
-        <button onClick={() => postDataTemplate()}>click to post</button>
-        <button onClick={() => getDataTemplate()}>click to get</button>
-      </header>
+    <div className='App'>
+      {/* <button onClick={() => postDataTemplate()}>click to post</button>
+      <button onClick={() => getDataTemplate()}>click to get</button> */}
+
+      {/* Routing */}
+      <Router>
+        <Routes>
+          <Route path='/' element={ <Landing/> }/>
+          <Route path='/create-account' element={ <CreateAccount/> }/>
+          <Route path='/timeline' element={ <Timeline/> }/>
+        </Routes>
+      </Router>
     </div>
   );
 }
