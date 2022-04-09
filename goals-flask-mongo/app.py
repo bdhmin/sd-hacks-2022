@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, jsonify
+from flask_restful import Api, Resource, reqparse
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 from flask_cors import CORS
@@ -19,27 +20,23 @@ app.register_blueprint(blueprint_template, url_prefix='/api/blu-template')
 @app.route('/')
 def index():
     return render_template('home.html')
-
 @app.route('/api/users', methods=['POST', 'GET'])
-def data():
+def allUsers():
     
     # POST a data to database
     if request.method == 'POST':
         body = request.json
-        firstName = body['firstName']
-        lastName = body['lastName']
-        emailId = body['emailId'] 
+        username = body['username']
+        password = body['password'] 
         # db.users.insert_one({
         db['users'].insert_one({
-            "firstName": firstName,
-            "lastName": lastName,
-            "emailId":emailId
+            "username": username,
+            "password": password,
         })
         return jsonify({
             'status': 'Data is posted to MongoDB!',
-            'firstName': firstName,
-            'lastName': lastName,
-            'emailId':emailId
+            "username": username,
+            "password": password,
         })
     
     # GET all data from database
@@ -48,34 +45,30 @@ def data():
         dataJson = []
         for data in allData:
             id = data['_id']
-            firstName = data['firstName']
-            lastName = data['lastName']
-            emailId = data['emailId']
+            username = data['username']
+            password = data['password']
             dataDict = {
                 'id': str(id),
-                'firstName': firstName,
-                'lastName': lastName,
-                'emailId': emailId
+                'username': username,
+                'password': password,
             }
             dataJson.append(dataDict)
         print(dataJson)
         return jsonify(dataJson)
 
 @app.route('/api/users/<string:id>', methods=['GET', 'DELETE', 'PUT'])
-def onedata(id):
+def userFromId(id):
 
     # GET a specific data by id
     if request.method == 'GET':
         data = db['users'].find_one({'_id': ObjectId(id)})
         id = data['_id']
-        firstName = data['firstName']
-        lastName = data['lastName']
-        emailId = data['emailId']
+        username = data['username']
+        password = data['password']
         dataDict = {
             'id': str(id),
-            'firstName': firstName,
-            'lastName': lastName,
-            'emailId':emailId
+            'username': username,
+            'password': password,
         }
         print(dataDict)
         return jsonify(dataDict)
@@ -89,23 +82,24 @@ def onedata(id):
     # UPDATE a data by id
     if request.method == 'PUT':
         body = request.json
-        firstName = body['firstName']
-        lastName = body['lastName']
-        emailId = body['emailId']
+        username = data['username']
+        password = data['password']
 
         db['users'].update_one(
             {'_id': ObjectId(id)},
             {
                 "$set": {
-                    "firstName":firstName,
-                    "lastName":lastName,
-                    "emailId": emailId
+                    "username":username,
+                    "password":password,
                 }
             }
         )
 
         print('\n # Update successful # \n')
         return jsonify({'status': 'Data id: ' + id + ' is updated!'})
+
+# @app.route('/api/users/<username:id>', methods=['GET', 'DELETE', 'PUT'])
+# def userFromUsername
 
 if __name__ == '__main__':
     app.debug = True
