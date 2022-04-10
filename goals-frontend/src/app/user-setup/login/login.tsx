@@ -43,7 +43,7 @@ function Login() {
         <button onClick={() => login_user()}>Log in</button>
       </div>
       {!canLogin ? (
-       <p className='error'>*Username or password is incorrect</p>
+      <p className='error'>*Username or password is incorrect</p>
       ) : (<p></p>)}
     </div>
   )
