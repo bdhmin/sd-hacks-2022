@@ -23,7 +23,7 @@ function Login() {
           setCanLogin(false);
         } else {
           setCanLogin(true);
-          navigate('/timeline/' + response.data.id);
+          navigate('/timeline/' + response.data._id);
         }
       })
       .catch((_: any) => {
