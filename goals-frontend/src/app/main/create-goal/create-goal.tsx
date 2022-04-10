@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import './create-goal.css';
@@ -116,6 +116,18 @@ function CreateGoal() {
       })
   }
 
+  function findTag(text: string) {
+    var x: Tag = {_id: '', text: ''};
+    axios.get('/api/tags/' + text)
+      .then((response: any) => {
+        x = response.data;
+      })
+      .catch((_: any) => {
+        console.log('ERROR')
+      })
+    return x;
+  }
+
   function addTag(tag: Tag) {
     let id: string = '';
 
@@ -123,12 +135,17 @@ function CreateGoal() {
       .then((response: any) => {
         console.log('added Tag');
         id = response.data.id;
+        getTags();
       })
       .catch((_: any) => {
         console.log('ERROR');
       })
     return id;
   }
+
+  useEffect(() => {
+    getTags();
+  }, [])
 
   return (
     <div className='create-goal'>
@@ -142,31 +159,74 @@ function CreateGoal() {
 
       <p>Completion Date</p>
       <DatePicker selected={end_date} onChange={(date) => setEnd_date(date)} />
+
       <p>Add Tags</p>
       {displaySelectedTags()}
       <Autocomplete
         value={currentTag}
         onChange={(event, newTag) => {
           if (typeof newTag === 'string') {
-            let id = tags.find(tag => tag.text === newTag)?._id;
-            const tag: Tag = {
-              _id: id ? id : '',
-              text: newTag,
+            if (selectedTags.find(tag => tag.text === newTag)) {
+              return;
+            }
+            var id = tags.find(tag => tag.text === newTag)?._id;
+            // If tag is selected and exists
+            var tag: Tag;
+            if (id) {
+              tag = {
+                _id: newTag,
+                text: newTag,
+              }
+            } else {
+              id = addTag({
+                _id: newTag,
+                text: newTag,
+              })
+              let foundTag: Tag = findTag(newTag);
+              console.log('idididi', id, foundTag)
+              tag = {
+                _id: newTag,
+                text: newTag,
+              }
             }
             setCurrentTag(tag);
             setSelectedTags([...selectedTags, tag])
+            console.log('selected', selectedTags);
           } else if (newTag && newTag.text) {
-            // Create a new value from the user input
-            const tag: Tag = {
-              _id: newTag._id,
-              text: newTag.text,
+            if (selectedTags.find(tag => tag.text === newTag.text)) {
+              return;
+            }
+            let tagtag = newTag.text;
+            var id2 = tags.find(tag => tag.text === tagtag)?._id;
+            var tag: Tag;
+            // Tag is found?
+            if (id2) {
+              tag = {
+                _id: newTag.text,
+                text: newTag.text,
+              }
+            } else {
+              let id = addTag({
+                _id: newTag.text,
+                text: newTag.text,
+              })
+              let foundTag: Tag = findTag(newTag.text);
+              console.log('idididi', id, foundTag)
+              tag = {
+                _id: newTag.text,
+                text: newTag.text,
+              }
             }
             setCurrentTag(tag);
             setSelectedTags([...selectedTags, tag])
+            console.log('selected', selectedTags);
           } else {
-            newTag = newTag ? newTag : {_id: '', text: ''};
-            setCurrentTag(newTag);
-            setSelectedTags([...selectedTags, newTag])
+            return;
+            // if (!newTag) {
+            //   return;
+            // };
+            // setCurrentTag(newTag);
+            // setSelectedTags([...selectedTags, newTag])
           }
         }}
         filterOptions={(options, params) => {
@@ -177,12 +237,8 @@ function CreateGoal() {
           // Suggest the creation of a new value
           const isExisting = options.some((option) => inputValue === option.text);
           if (inputValue !== '' && !isExisting) {
-            let id = addTag({
-              _id: '',
-              text: inputValue,
-            })
             filtered.push({
-              _id: id,
+              _id: '',
               text: inputValue,
             });
           }
