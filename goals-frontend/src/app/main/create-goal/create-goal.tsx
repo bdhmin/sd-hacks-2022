@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import './create-goal.css';
@@ -6,6 +6,8 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
 import { Goal } from '../../+types/goal';
+import { Tag } from '../../+types/tag';
+import { Autocomplete, TextField, createFilterOptions } from '@mui/material';
 
 function CreateGoal() {
   const userId = localStorage.getItem('currentUserId');
@@ -21,6 +23,13 @@ function CreateGoal() {
   const [subgoalTitle, setSubgoalTitle] = useState('');
   const [subgoalDescription, setSubgoalDescription] = useState('');
   const [subgoalEnd_date, setSubgoalEnd_date] = useState<Date | null>(null);
+
+  // Tags Content
+  const [filteredTags, setFilteredTags] = useState<Tag[]>([]);
+  const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
+  const [currentTag, setCurrentTag] = useState<Tag | null>({_id: '', text: ''});
+  const filter = createFilterOptions<Tag>();
+  var tags: Tag[] = [];
 
   const emptyGoal: Goal = {
     _id: '',
@@ -75,6 +84,7 @@ function CreateGoal() {
     newGoal.start_date = new Date();
     newGoal.end_date = end_date ? end_date : new Date();
     newGoal.subgoals = subgoals;
+    newGoal.tags = selectedTags;
 
     axios.post('/api/goals', newGoal)
       .then((_: any) => {
@@ -84,6 +94,58 @@ function CreateGoal() {
         console.log('error posting goal');
       })
   }
+
+  function displaySelectedTags() {
+    var x = [];
+    for (let selectedTag of selectedTags) {
+      x.push(
+        <h6>{selectedTag.text}</h6>
+      )
+    }
+    return x;
+  }
+
+  function getTags() {
+    axios.get('/api/tags')
+      .then((response: any) => {
+        console.log('tagdata', response.data);
+        tags = response.data;
+      })
+      .catch((_: any) => {
+        console.log('ERROR');
+      })
+  }
+
+  function findTag(text: string) {
+    var x: Tag = {_id: '', text: ''};
+    axios.get('/api/tags/' + text)
+      .then((response: any) => {
+        x = response.data;
+      })
+      .catch((_: any) => {
+        console.log('ERROR')
+      })
+    return x;
+  }
+
+  function addTag(tag: Tag) {
+    let id: string = '';
+
+    axios.post('/api/tags', tag)
+      .then((response: any) => {
+        console.log('added Tag');
+        id = response.data.id;
+        getTags();
+      })
+      .catch((_: any) => {
+        console.log('ERROR');
+      })
+    return id;
+  }
+
+  useEffect(() => {
+    getTags();
+  }, [])
 
   return (
     <div className='create-goal'>
@@ -98,6 +160,117 @@ function CreateGoal() {
       <p>Completion Date</p>
       <DatePicker selected={end_date} onChange={(date) => setEnd_date(date)} />
 
+      <p>Add Tags</p>
+      {displaySelectedTags()}
+      <Autocomplete
+        value={currentTag}
+        onChange={(event, newTag) => {
+          if (typeof newTag === 'string') {
+            if (selectedTags.find(tag => tag.text === newTag)) {
+              return;
+            }
+            var id = tags.find(tag => tag.text === newTag)?._id;
+            // If tag is selected and exists
+            var tag: Tag;
+            if (id) {
+              tag = {
+                _id: newTag,
+                text: newTag,
+              }
+            } else {
+              id = addTag({
+                _id: newTag,
+                text: newTag,
+              })
+              let foundTag: Tag = findTag(newTag);
+              console.log('idididi', id, foundTag)
+              tag = {
+                _id: newTag,
+                text: newTag,
+              }
+            }
+            setCurrentTag(tag);
+            setSelectedTags([...selectedTags, tag])
+            console.log('selected', selectedTags);
+          } else if (newTag && newTag.text) {
+            if (selectedTags.find(tag => tag.text === newTag.text)) {
+              return;
+            }
+            let tagtag = newTag.text;
+            var id2 = tags.find(tag => tag.text === tagtag)?._id;
+            var tag: Tag;
+            // Tag is found?
+            if (id2) {
+              tag = {
+                _id: newTag.text,
+                text: newTag.text,
+              }
+            } else {
+              let id = addTag({
+                _id: newTag.text,
+                text: newTag.text,
+              })
+              let foundTag: Tag = findTag(newTag.text);
+              console.log('idididi', id, foundTag)
+              tag = {
+                _id: newTag.text,
+                text: newTag.text,
+              }
+            }
+            setCurrentTag(tag);
+            setSelectedTags([...selectedTags, tag])
+            console.log('selected', selectedTags);
+          } else {
+            return;
+            // if (!newTag) {
+            //   return;
+            // };
+            // setCurrentTag(newTag);
+            // setSelectedTags([...selectedTags, newTag])
+          }
+        }}
+        filterOptions={(options, params) => {
+
+          const filtered = filter(options, params);
+
+          const { inputValue } = params;
+          // Suggest the creation of a new value
+          const isExisting = options.some((option) => inputValue === option.text);
+          if (inputValue !== '' && !isExisting) {
+            filtered.push({
+              _id: '',
+              text: inputValue,
+            });
+          }
+
+          return filtered;
+        }}
+        selectOnFocus
+        clearOnBlur
+        handleHomeEndKeys
+        id="free-solo-with-text-demo"
+        options={tags}
+        getOptionLabel={(option) => {
+          // Value selected with enter, right from the input
+          if (typeof option === 'string') {
+            return option;
+          }
+          // Add "xxx" option created dynamically
+          if (option.text) {
+            return option.text;
+          }
+          // Regular option
+          return option.text;
+        }}
+        renderOption={(props, option) => <li {...props}>{option.text}</li>}
+        sx={{ width: 300 }}
+        freeSolo
+        renderInput={(params) => (
+          <TextField {...params} />
+        )}
+      />
+
+      <br/>
       <p>Subgoals</p>
       {(getSubgoals())}
 

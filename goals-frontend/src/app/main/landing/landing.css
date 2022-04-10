@@ -10,3 +10,29 @@
 h1 {
   font-size: 64px;
 }
+
+.right-block {
+  position: absolute;
+  width: 62vw;
+  right: 0px;
+  z-index: 1;
+}
+
+.left-block {
+  position: absolute;
+  width: 38vw;
+  left: 0px;
+  top: 0px;
+  bottom: 0px;
+  background: #A8EED3;
+  z-index: 0;
+}
+
+.left-block-text {
+  text-align: left;
+  font-size: 48px;
+  max-width: 26vw;
+  margin-left: 6vw;
+  margin-top: 20vw;
+  color: #53AA88;
+}

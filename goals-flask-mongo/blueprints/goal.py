@@ -48,6 +48,14 @@ def goal_data():
         followers = body['followers']
         follower_count = body['follower_count']
         inspired_goals = body['inspired_goals']
+        inspired_by = body['inspired_by']
+
+        # reformat all tags
+        tagIds = []
+
+        for tag in tags:
+            print('tag', tag)
+            tagIds.append(tag['_id'])
 
         # POST parent goal with empty subgoals
         parentGoalId = db['goals'].insert_one({
@@ -59,17 +67,20 @@ def goal_data():
             "end_date": end_date,
             "subgoals": [],
             "depth": depth,
-            "tags": tags,
+            "tags": tagIds,
             "followers": followers,
             "follower_count": follower_count,
             "inspired_goals": inspired_goals,
+            "inspired_by": inspired_by,
         }).inserted_id
+
 
         # POST all subgoals
         subgoalIds = []
 
         for subgoal in subgoals:
             subgoal['_parentId'] = parentGoalId
+            subgoal['tags'] = tagIds
             subgoalIds.append(ObjectId(db['goals'].insert_one(format_goal(subgoal)).inserted_id))
 
         # PUT parent goal's subgoals array
@@ -104,6 +115,7 @@ def goal_data():
             followers = goal['followers']
             follower_count = goal['follower_count']
             inspired_goals = goal['inspired_goals']
+            inspired_by = goal['inspired_by']
             goalDict = {
                 '_id': str(id),
                 "_creatorId": str(_creatorId),
@@ -118,6 +130,7 @@ def goal_data():
                 "followers": followers,
                 "follower_count": follower_count,
                 "inspired_goals": inspired_goals,
+                "inspired_by": inspired_by,
             }
             goalJson.append(goalDict)
         print(goalJson)

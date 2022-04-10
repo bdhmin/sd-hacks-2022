@@ -10,9 +10,9 @@ import GoalCard from '../../shared/goal-card/goal-card';
 function Explore() {
     const userId = localStorage.getItem('currentUserId');
 
-    const [goals, setGoals] = useState<any[]>([]);
-    const [tags, setTags] = useState<string[]>([]);
-    const [filteredTags, setFilteredTags] = useState<string[]>([]);
+    const [goals, setGoals] = useState<Goal[]>([]);
+    const [tags, setTags] = useState<Tag[]>([]);
+    const [filteredTags, setFilteredTags] = useState<Tag[]>([]);
 
     const tagData = ['education', 'hackathon', 'computer science', 'learning', 'homework', 'school']
 
@@ -123,7 +123,7 @@ function Explore() {
       // setGoals(goalData)
   
       // get all tags
-      setTags(tagData);
+      // setTags(tagData);
 
       axios.get('/api/goals/explore/' + userId)
       .then((result: any) => {
