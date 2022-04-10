@@ -1,3 +1,5 @@
+import { User } from "./user";
+
 export interface Goal {
     _id: string,
     _creatorId: string | null,

@@ -4,7 +4,7 @@ from bson.objectid import ObjectId
 from flask_cors import CORS
 import yaml
 import certifi
-from blueprints.blueprint_template import blueprint_template
+from blueprints.goal import goal
 
 ca = certifi.where()
 app = Flask(__name__)
@@ -14,14 +14,14 @@ client = MongoClient(config['uri'], tlsCAFile=ca)
 db = client['test']
 CORS(app)
 
-app.register_blueprint(blueprint_template, url_prefix='/api/blu-template')
+app.register_blueprint(goal, url_prefix='/api/goals')
 
 @app.route('/')
 def index():
     return render_template('home.html')
 
 @app.route('/api/users', methods=['POST', 'GET'])
-def data():
+def user():
     
     # POST a data to database
     if request.method == 'POST':
@@ -34,27 +34,27 @@ def data():
             "password": password,
         })
         return jsonify({
-            'status': 'Data is posted to MongoDB!',
+            'status': 'User is posted to MongoDB!',
             'username': username,
             'password': password,
         })
     
     # GET all data from database
     if request.method == 'GET':
-        allData = db['users'].find()
-        dataJson = []
-        for data in allData:
-            id = data['_id']
-            username = data['username']
-            password = data['password']
-            dataDict = {
+        allUsers = db['users'].find()
+        userJson = []
+        for user in allUsers:
+            id = user['_id']
+            username = user['username']
+            password = user['password']
+            userDict = {
                 '_id': str(id),
                 'username': username,
                 'password': password,
             }
-            dataJson.append(dataDict)
-        print(dataJson)
-        return jsonify(dataJson)
+            userJson.append(userDict)
+        print(userJson)
+        return jsonify(userJson)
 
 @app.route('/api/users/id/<string:id>', methods=['GET', 'DELETE', 'PUT'])
 def user_from_id(id):
