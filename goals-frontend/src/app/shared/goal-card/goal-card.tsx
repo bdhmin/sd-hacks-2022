@@ -5,6 +5,7 @@ import './goal-card.css';
 import { Goal } from '../../+types/goal';
 import EventIcon from '@mui/icons-material/Event';
 import { Link, useNavigate } from 'react-router-dom';
+import { Tag } from '../../+types/tag';
 
 function GoalCard(props: any) {
 
@@ -25,7 +26,7 @@ function GoalCard(props: any) {
         <div className='none-selected'> select a goal for more info </div>
 
         : <div> 
-            <div className={ hasPassed(goal.end_date) ? goal._parentId.length > 0 ? 'old-child' : 'old' : goal._parentId.length > 0 ? 'curr-child' : 'curr'}><button onClick={() => click({data: goal})}>{goal.title}</button></div>
+            <div className={ hasPassed(goal.end_date) ? goal._parentId.length > 0 ? 'old-child' : 'old' : goal._parentId.length > 0 ? 'curr-child' : 'curr'}>{goal.title}</div>
             <div className="stats">
               <div className="event-deadline"><EventIcon style={{ fontSize: 20 }}></EventIcon><div>{formateDate(goal.end_date)}</div></div>
               <div>{goal.follower_count} followers</div>
@@ -34,11 +35,11 @@ function GoalCard(props: any) {
             <div className="descript-head">Description:</div>
             <div className="description">{goal.description}</div>
             <div className="tag-holder">
-              {/* {
-                goal.tags.slice(0, numTags).map((tag: string, idx: number) => 
-                  <div className="tag" key={idx}>{tag}</div>
+              {
+                goal.tags.slice(0, numTags).map((tag: Tag, idx: number) => 
+                  <div className="tag" key={idx}>{tag.text}</div>
                 )
-              } */}
+              }
             </div>
             {
               goal.inspired_by !== null ? <div className="inspiredGoal">this goal was inspired by: <span className='inspired-link'>{goal.inspired_by.title}</span></div>
@@ -51,10 +52,11 @@ function GoalCard(props: any) {
     </div>
   )
 
-  function formateDate(date: Date) {
-    const yyyy = date.getFullYear();
-    const mm = date.getMonth() + 1; // Months start at 0!
-    const dd = date.getDate();
+  function formateDate(date: any) {
+    const d = new Date(date)
+    const yyyy = d.getFullYear();
+    const mm = d.getMonth() + 1; // Months start at 0!
+    const dd = d.getDate();
 
     return mm + '/' + dd + '/' + yyyy;
   }
