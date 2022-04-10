@@ -9,8 +9,8 @@ import { Autocomplete, TextField } from '@mui/material';
 function Explore() {
 
     const [goals, setGoals] = useState<Goal[]>([]);
-    const [tags, setTags] = useState<string[]>([]);
-    const [filteredTags, setFilteredTags] = useState<string[]>([]);
+    const [tags, setTags] = useState<Tag[]>([]);
+    const [filteredTags, setFilteredTags] = useState<Tag[]>([]);
 
     const tagData = ['education', 'hackathon', 'computer science', 'learning', 'homework', 'school']
 
@@ -118,10 +118,10 @@ function Explore() {
 
     useEffect(() => {
       // get all goals where creator is not equal to current user
-      setGoals(goalData)
+      // setGoals(goalData)
   
       // get all tags
-      setTags(tagData);
+      // setTags(tagData);
 
     }, [])
 
@@ -129,7 +129,7 @@ function Explore() {
 
     return (
       <div className="explore">
-        <Autocomplete
+        {/* <Autocomplete
           multiple
           id="tags-outlined"
           options={tags}
@@ -144,7 +144,7 @@ function Explore() {
           onChange={(_event, newTags) => {
             setFilteredTags(newTags);
           }}
-        />
+        /> */}
       </div>
     )
 

@@ -28,11 +28,11 @@ function GoalCard(props: any) {
             <div className="descript-head">Description:</div>
             <div className="description">{goal.description}</div>
             <div className="tag-holder">
-              {
+              {/* {
                 goal.tags.slice(0, numTags).map((tag: string, idx: number) => 
                   <div className="tag" key={idx}>{tag}</div>
                 )
-              }
+              } */}
             </div>
             {
               goal.inspired_by !== null ? <div className="inspiredGoal">this goal was inspired by: <span className='inspired-link'>{goal.inspired_by.title}</span></div>

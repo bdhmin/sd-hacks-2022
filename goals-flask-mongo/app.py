@@ -5,6 +5,7 @@ from flask_cors import CORS
 import yaml
 import certifi
 from blueprints.goal import goal
+from blueprints.tag import tag
 
 ca = certifi.where()
 app = Flask(__name__)
@@ -15,6 +16,7 @@ db = client['test']
 CORS(app)
 
 app.register_blueprint(goal, url_prefix='/api/goals')
+app.register_blueprint(tag, url_prefix='/api/tags')
 
 @app.route('/')
 def index():
