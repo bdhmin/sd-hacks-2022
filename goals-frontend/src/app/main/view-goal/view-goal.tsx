@@ -9,8 +9,6 @@ import GoalCard from '../../shared/goal-card/goal-card';
 function ViewGoal() {
     const [currGoal, setCurrGoal] = useState<any>(null);
 
-    const userId = localStorage.getItem('currentUserId');
-
     const goal: Goal = {
         '_id': 'foo',
         '_creatorId': null,
