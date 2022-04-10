@@ -8,6 +8,7 @@ import Timeline from './app/main/timeline/timeline';
 import CreateAccount from './app/user-setup/create-account/create-account';
 import Navbar from './app/shared/navbar/navbar';
 import CreateGoal from './app/main/create-goal/create-goal';
+import Explore from './app/main/explore/explore';
 
 function App() {
 
@@ -48,6 +49,7 @@ function App() {
           <Route path='/create-account' element={ <CreateAccount/> }/>
           <Route path='/timeline' element={ <Timeline/> }/>
           <Route path='/create-goal' element={ <CreateGoal/> }/>
+          <Route path='/explore' element={ <Explore/> } />
         </Routes>
       </Router>
     </div>

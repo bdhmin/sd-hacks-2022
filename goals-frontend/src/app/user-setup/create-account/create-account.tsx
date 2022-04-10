@@ -56,7 +56,7 @@ function CreateAccount() {
       .then((response: any) => {
         console.log(response);
         localStorage.setItem('currentUserId', response.data._id);
-        navigate('/timeline/' + response.data._id);
+        navigate('/timeline/');
       })
       .catch((_: any) => {
         console.log('ERROR');
