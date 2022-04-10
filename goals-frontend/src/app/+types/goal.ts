@@ -15,8 +15,8 @@ export interface Goal {
     depth: number,
     tags: Tag[],
 
-    followers: string[],
+    followers: User[],
     follower_count: number,
-    inspired_goals: string[]
+    inspired_goals: Goal[]
     inspired_by: Goal | null,
 }

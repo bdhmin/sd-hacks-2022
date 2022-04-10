@@ -9,7 +9,7 @@ import GoalCard from '../../shared/goal-card/goal-card';
 function ViewGoal() {
     const [currGoal, setCurrGoal] = useState<any>(null);
 
-    const goal: Goal = {
+    const goal: any = {
         '_id': 'foo',
         '_creatorId': null,
         '_parentId': 'foo',
