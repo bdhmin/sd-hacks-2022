@@ -9,7 +9,7 @@ function Landing() {
   
   return (
     <div className='landing'>
-      <h1>This is Goals.</h1>
+      <h1>This is Marathon.</h1>
       <Login />
     </div>
   )

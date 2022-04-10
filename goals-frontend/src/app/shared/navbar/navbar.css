@@ -5,4 +5,8 @@
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
+  position: fixed;
+  top: 0;
+  background-color: white;
+  box-shadow: 0px 0px 33px 5px #aaeed4ac;
 }

@@ -11,6 +11,7 @@ function Navbar() {
 
   return userId ? (
     <div className='navbar'>
+      <h2>Marathon</h2>
       {/* <p>{ userId }</p> */}
       <Link to={'/timeline/'}>Timeline</Link>
       <Link to={'/create-goal/'}>Create a Goal</Link>
