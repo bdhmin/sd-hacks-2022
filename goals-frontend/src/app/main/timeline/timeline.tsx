@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import './timeline.css';
 import TimelineLine from './timeline-line/timeline-line';
 import { useParams } from 'react-router';
+import { Goal } from '../../+types/goal';
+import GoalCard from '../../shared/goal-card/goal-card';
 
 function Timeline() {
+  const [currGoal, setCurrGoal] = useState<any>(null);
   
   const goalData = [
     {
@@ -19,12 +22,15 @@ function Timeline() {
       'subgoals': ['foo1', 'foo2'],
       '_parentId': "",
       'depth': 0,
-      'tags': [],
+      'tags': ['education', 'hackathon', 'computer science', 'learning'],
 
       'followers': [],
       'follower_count': 0,
 
       'inspired_goals': [],
+      'inspired_by': {
+        'title':'sd hacks'
+      },
     },
 
     {
@@ -44,6 +50,7 @@ function Timeline() {
       'follower_count': 4,
 
       'inspired_goals': [],
+      'inspired_by': null,
     },
 
     {
@@ -63,6 +70,7 @@ function Timeline() {
       'follower_count': 0,
 
       'inspired_goals': [],
+      'inspired_by': null,
     },
 
     {
@@ -82,6 +90,7 @@ function Timeline() {
       'follower_count': 0,
 
       'inspired_goals': [],
+      'inspired_by': null,
     },
 
     {
@@ -101,16 +110,23 @@ function Timeline() {
       'follower_count': 0,
 
       'inspired_goals': [],
+      'inspired_by': null,
     },
   ]
 
   return (
     <div className='timeline'>
-      <h4>This is the timeline</h4>
-      <div>
+      <div className="header">Timeline</div>
+      <div className="content">
       <TimelineLine
         goalData={goalData}
+        setGoal={setCurrGoal}
       ></TimelineLine>
+      {
+        currGoal === null ? 
+        <GoalCard goal={currGoal}></GoalCard>
+        : <GoalCard goal={currGoal}></GoalCard>
+      }
       </div>
     </div>
   )

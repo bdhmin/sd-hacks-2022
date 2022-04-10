@@ -47,6 +47,11 @@
     border-radius: 5px;
 }
 
+.passed:hover, .current:hover, .passed-child:hover, .current-child:hover {
+    opacity: .5;
+    cursor: pointer;
+}
+
 .passed-child, .current-child {
     height: 50px;
 }

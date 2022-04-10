@@ -29,13 +29,13 @@ function LineNode(props: any) {
                 goal._parentId.length > 0 
                 
                     ?
-                    <div className="passed-child">
+                    <div className="passed-child" onClick={() => props.setGoal(goal)}>
                         <div className="title">{ goal.title }</div>
                         <div className="desc">{ goal.description }</div>
                     </div>
 
                     :
-                    <div className="passed">
+                    <div className="passed" onClick={() => props.setGoal(goal)}>
                         <div className="title">{ goal.title }</div>
                         <div className="desc">{ goal.description }</div>
                     </div>
@@ -46,13 +46,13 @@ function LineNode(props: any) {
                 goal._parentId.length > 0 
                     
                 ?
-                <div className="current-child">
+                <div className="current-child" onClick={() => props.setGoal(goal)}>
                     <div className="title">{ goal.title }</div>
                     <div className="desc">{ goal.description }</div>
                 </div>
 
                 :
-                <div className="current">
+                <div className="current" onClick={() => props.setGoal(goal)}>
                     <div className="title">{ goal.title }</div>
                     <div className="desc">{ goal.description }</div>
                 </div>
