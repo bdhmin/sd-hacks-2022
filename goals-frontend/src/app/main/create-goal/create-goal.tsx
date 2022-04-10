@@ -22,14 +22,14 @@ function CreateGoal() {
   const [subgoalDescription, setSubgoalDescription] = useState('');
   const [subgoalEnd_date, setSubgoalEnd_date] = useState<Date | null>(null);
 
-  const emptyGoal = {
+  const emptyGoal: Goal = {
     _creatorId: userId,
     _parentId: '',
     title: '',
     description: '',
     start_date: new Date(),
     end_date: new Date(),
-    subgoals: [],
+    subgoals: new Array<Goal>(),
     depth: 0,
     tags: [],
     followers: [],
@@ -42,7 +42,7 @@ function CreateGoal() {
   }
 
   function addSubgoal() {
-    let subgoal = {...emptyGoal}; // Hardcopy of empty goal
+    let subgoal: Goal = {...emptyGoal}; // Hardcopy of empty goal
     subgoal.depth = 1;
     subgoal.title = subgoalTitle;
     subgoal.description = subgoalDescription;
@@ -72,6 +72,7 @@ function CreateGoal() {
     newGoal.description = description;
     newGoal.start_date = new Date();
     newGoal.end_date = end_date ? end_date : new Date();
+    newGoal.subgoals = subgoals;
 
     axios.post('/api/goals', newGoal)
       .then((_: any) => {

@@ -7,11 +7,12 @@ export interface Goal {
     start_date: Date,
     end_date: Date,
 
-    subgoals: string[],
+    subgoals: Goal[],
     depth: number,
     tags: string[],
 
     followers: string[],
     follower_count: number,
     inspired_goals: string[]
+    inspired_by: Goal,
 }
