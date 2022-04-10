@@ -5,6 +5,7 @@ import './view-goal.css';
 import { Goal } from '../../+types/goal'
 import TimelineLine from '../timeline/timeline-line/timeline-line';
 import GoalCard from '../../shared/goal-card/goal-card';
+import { Tag } from '../../+types/tag';
 
 function ViewGoal() {
     const [currGoal, setCurrGoal] = useState<any>(null);
@@ -59,7 +60,7 @@ function ViewGoal() {
               }
         ],
         'depth': 0,
-        'tags': ['fdjka', 'jfdkas;'],
+        'tags': [{_id: 'fdjka', text: 'fdjka;'}],
 
         'followers': [],
         'follower_count': 0,
@@ -70,7 +71,7 @@ function ViewGoal() {
     const goalData = [goal];
     
     const subgoals:Goal[] = goal.subgoals;
-    const tags:string[] = goal.tags;
+    const tags:Tag[] = goal.tags;
 
     for (var g of subgoals) {
         goalData.push(g);
