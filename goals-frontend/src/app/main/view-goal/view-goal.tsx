@@ -6,81 +6,50 @@ import { Goal } from '../../+types/goal'
 import TimelineLine from '../timeline/timeline-line/timeline-line';
 import GoalCard from '../../shared/goal-card/goal-card';
 import { Tag } from '../../+types/tag';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
-function ViewGoal() {
+function ViewGoal(props: any) {
     const [currGoal, setCurrGoal] = useState<any>(null);
 
-    const goal: Goal = {
-        '_id': 'foo',
-        '_creatorId': null,
-        '_parentId': 'foo',
+    const location = useLocation();
+    const state : any = location.state;
+    const goal: any = state.data;
 
-        'title': 'SD Hacks',
-        'description': 'Submit a cool project for sd hacks 2022! We want to make Goals, an app for users to create, manage and follow goals. The stack is React, Flask, and MongoDB',
-        'start_date': new Date(),
-        'end_date': new Date(),
+    console.log(Object.keys(goal['data']));
 
-        'subgoals': [
-            {'_id': 'bar',
-             '_creatorId': null,
-            'title': 'Finish Homework',
-            'description': 'Needa do that homework',
-            'start_date': new Date(2022, 11, 18),
-            'end_date': new Date(2022, 11, 18),
-      
-            'subgoals': [],
-            '_parentId': "",
-            'depth': 0,
-            'tags': [],
-      
-            'followers': [],
-            'follower_count': 4,
-      
-            'inspired_goals': [],
-            'inspired_by': null,
-            },
-            {
-                '_id': 'foo2',
-                'title': 'Not Subgoal 2',
-                'description': 'This is the second subgoal for sd hacks 2022',
-                '_creatorId': 'Udo',
-                'start_date': new Date(2022, 10, 4),
-                'end_date': new Date(2022, 10, 4),
-          
-                'subgoals': [],
-                '_parentId': "",
-                'depth': 0,
-                'tags': [],
-          
-                'followers': [],
-                'follower_count': 0,
-          
-                'inspired_goals': [],
-                'inspired_by': null,
-              }
-        ],
-        'depth': 0,
-        'tags': [{_id: 'fdjka', text: 'fdjka;'}],
-
-        'followers': [],
-        'follower_count': 0,
-        'inspired_goals': [],
-        'inspired_by': null
+    let go: Goal = {
+        _id: goal['data']['_id'],
+        _creatorId: goal['data']['_creatorId'],
+        _parentId: goal['data']['_parentId'],
+        title: goal['data']['title'],
+        description: goal['data']['description'],
+        start_date: goal['data']['start_date'],
+        end_date: goal['data']['end_date'],
+        subgoals: goal['data']['subgoals'],
+        depth: goal['data']['depth'],
+        tags: goal['data']['tags'],
+        followers: goal['data']['followers'],
+        follower_count: goal['data']['follower_count'],
+        inspired_goals: goal['data']['inspired_goals'],
+        inspired_by: goal['data']['inspired_by'],
     }
 
-    const goalData = [goal];
+    const goalData = [go];
     
-    const subgoals:Goal[] = goal.subgoals;
-    const tags:Tag[] = goal.tags;
-
-    for (var g of subgoals) {
-        goalData.push(g);
+    const subgoals:Goal[] = go.subgoals;
+    if (subgoals.length > 0)
+    {
+        for (var g of subgoals) {
+            goalData.push(g);
+        } 
+    
     }
-
+    
     return(
         <div className='view-goal'>
-            <div className="header">{goal.title}</div>
+            <div className="header">{go.title}</div>
             <div className="content">
+            
             <TimelineLine
                 goalData={goalData}
                 setGoal={setCurrGoal}

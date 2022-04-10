@@ -4,12 +4,18 @@ import axios from 'axios';
 import './goal-card.css';
 import { Goal } from '../../+types/goal';
 import EventIcon from '@mui/icons-material/Event';
+import { Link, useNavigate } from 'react-router-dom';
 
 function GoalCard(props: any) {
 
   const goal: Goal = props.goal
 
   const numTags: number = goal === null ? 0 : goal.tags.length < 3 ? goal.tags.length : 3;
+
+  const navigate = useNavigate();
+  const click = (data: any) => {
+    navigate("/view-goal", {state: {data: data} });
+  }
   
   return (
     <div className='goalcard'>
@@ -19,7 +25,7 @@ function GoalCard(props: any) {
         <div className='none-selected'> select a goal for more info </div>
 
         : <div> 
-            <div className={ hasPassed(goal.end_date) ? goal._parentId.length > 0 ? 'old-child' : 'old' : goal._parentId.length > 0 ? 'curr-child' : 'curr'}>{goal.title}</div>
+            <div className={ hasPassed(goal.end_date) ? goal._parentId.length > 0 ? 'old-child' : 'old' : goal._parentId.length > 0 ? 'curr-child' : 'curr'}><button onClick={() => click({data: goal})}>{goal.title}</button></div>
             <div className="stats">
               <div className="event-deadline"><EventIcon style={{ fontSize: 20 }}></EventIcon><div>{formateDate(goal.end_date)}</div></div>
               <div>{goal.follower_count} followers</div>
