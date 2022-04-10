@@ -8,7 +8,7 @@ import CheckIcon from '@mui/icons-material/Check';
 function LineNode(props: any) {
   
   const goal: Goal = props.goal;
-  const passed = goal.end_date < new Date()
+  const passed = new Date(goal.end_date) < new Date()
 
 
 

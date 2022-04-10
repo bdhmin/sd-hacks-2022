@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import './timeline.css';
@@ -9,6 +9,7 @@ import GoalCard from '../../shared/goal-card/goal-card';
 
 function Timeline() {
   const [currGoal, setCurrGoal] = useState<any>(null);
+  const [goals, setGoals] = useState<Goal[]>([]);
   
   const userId = localStorage.getItem('currentUserId');
 
@@ -116,20 +117,40 @@ function Timeline() {
     },
   ]
 
+  useEffect(() => {
+    axios.get('/api/goals/timeline/' + userId)
+      .then((result: any) => {
+        console.log("result", result)
+        setGoals(result['data'])
+      })
+      .catch((_: any) => {
+        console.log("ERROR")
+      })
+  }, [])
+
+
   return (
     <div className='timeline'>
       <div className="header">Timeline</div>
-      <div className="content">
-      <TimelineLine
-        goalData={goalData}
-        setGoal={setCurrGoal}
-      ></TimelineLine>
+
       {
-        currGoal === null ? 
-        <GoalCard goal={currGoal}></GoalCard>
-        : <GoalCard goal={currGoal}></GoalCard>
+        goals.length === 0 ?
+
+        <div>You have no goals yet, head to create goals to make one or to explore goals to find and follow!</div>
+
+        :
+        <div className="content">
+        <TimelineLine
+          goalData={goals}
+          setGoal={setCurrGoal}
+        ></TimelineLine>
+        {
+          currGoal === null ? 
+          <GoalCard goal={currGoal}></GoalCard>
+          : <GoalCard goal={currGoal}></GoalCard>
+        }
+        </div>
       }
-      </div>
     </div>
   )
 }

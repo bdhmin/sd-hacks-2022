@@ -187,6 +187,57 @@ def get_explore_data(userId):
 
     return jsonify(formattedGoals)
 
+@goal.route('/timeline/<string:userId>')
+def get_timeline_data(userId):
+    explore_goals = db['goals'].find({ '_creatorId': ObjectId(userId) })
+    formattedGoals = []
+    for goal in explore_goals:
+        all_tags = db['tags'].find()
+        users = db['users'].find()
+        id = goal['_id']
+        _creatorId = goal['_creatorId']
+        _parentId = '' if goal['_parentId'] == None else goal['_parentId']
+
+        title = goal['title']
+        description = goal['description']
+        start_date = goal['start_date']
+        end_date = goal['end_date']
+
+        subgoals = [] if len(goal['subgoals']) == 0 else getSubgoals(str(id))
+        depth = goal['depth']
+        tags = []
+        for tag in all_tags:
+            if tag['_id'] in goal['tags']:
+                tags.append(tag)
+        followers = [user for user in users if user['_id'] in goal['followers']]
+        follower_count = goal['follower_count']
+        inspired_goals = []
+        ib = db['users'].find_one({'_id': str(goal['inspired_by'])})
+        inspired_by = None if ib == None else {
+            '_id': str(goal['inspired_by']),
+            'username': ib['username'],
+            'password': ib['password'],
+        }
+        formGoal = {
+            '_id': str(id),
+            "_creatorId": str(_creatorId),
+            "_parentId": str(_parentId),
+            "title": title,
+            "description": description,
+            "start_date": start_date,
+            "end_date": end_date,
+            "subgoals": subgoals,
+            "depth": depth,
+            "tags": tags,
+            "followers": followers,
+            "follower_count": follower_count,
+            "inspired_goals": inspired_goals,
+            "inspired_by": inspired_by
+        }
+        formattedGoals.append(formGoal)
+
+    return jsonify(formattedGoals)
+
 def getSubgoals(parentId):
     sub_goals = db['goals'].find({'_creatorId' : { '$ne': parentId }})
     all_tags = db['tags'].find()
