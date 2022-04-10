@@ -35,6 +35,7 @@ function CreateGoal() {
     followers: [],
     follower_count: 0,
     inspired_goals: [],
+    inspired_by: null,
   }
 
   function createSubgoal() {

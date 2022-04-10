@@ -1,3 +1,5 @@
+import { User } from "./user";
+
 export interface Goal {
     _creatorId: string | null,
     _parentId: string,
@@ -14,5 +16,5 @@ export interface Goal {
     followers: string[],
     follower_count: number,
     inspired_goals: string[]
-    inspired_by: Goal,
+    inspired_by: Goal | null,
 }
