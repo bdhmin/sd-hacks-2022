@@ -1,9 +1,9 @@
 export interface Goal {
+    _creatorId: string,
     _parentId: string,
 
     title: string,
     description: string,
-    creator: string,
     start_date: Date,
     end_date: Date,
 
