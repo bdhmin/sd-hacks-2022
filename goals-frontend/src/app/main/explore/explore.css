@@ -27,3 +27,12 @@
 .card-area {
     padding: 5px;
 }
+
+.card-area-card {
+    transition: all 0.3s ease;
+}
+
+.card-area-card:hover {
+    cursor: pointer;
+    background-color: rgba(224, 205, 255, 0.388);
+}

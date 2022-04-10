@@ -28,6 +28,7 @@ def format_goal(goal):
         "followers": goal['followers'],
         "follower_count": goal['follower_count'],
         "inspired_goals": goal['inspired_goals'],
+        "inspired_by": goal['inspired_by']
     }
 
 @goal.route('/', methods=['POST', 'GET'])
@@ -138,7 +139,7 @@ def goal_data():
 
 @goal.route('/explore/<string:userId>')
 def get_explore_data(userId):
-    explore_goals = db['goals'].find({'_creatorId' : { '$ne': userId }, '_parentId' : None })
+    explore_goals = db['goals'].find({'_creatorId' : { '$ne': ObjectId(userId) }, '_parentId' : None })
     formattedGoals = []
     for goal in explore_goals:
         all_tags = db['tags'].find()

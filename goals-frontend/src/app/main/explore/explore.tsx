@@ -75,6 +75,7 @@ function Explore() {
     return (
       <div className="explore">
         <div className="explore-head">Explore Goals</div>
+        <h3>If you see a goal you like, click on it to follow!</h3>
         <div className="explore-auto">
           <Autocomplete
             multiple
@@ -97,12 +98,16 @@ function Explore() {
         <div className='cards'>
           {
             filteredGoals().map((goal: Goal, idx: number) => {
-              return <div className="card-area" key={idx}><GoalCard goal={goal}></GoalCard></div>
+              return <div className="card-area" key={idx}><div className="card-area-card" onClick={() => followGoal(goal)}><GoalCard goal={goal}></GoalCard></div></div>
             })
           }
         </div>
       </div>
     )
+
+    function followGoal(goal: Goal) {
+      
+    }
 
 
 }
