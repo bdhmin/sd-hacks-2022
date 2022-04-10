@@ -4,10 +4,11 @@ import axios from 'axios';
 import './goal-card.css';
 import { Goal } from '../../+types/goal';
 import EventIcon from '@mui/icons-material/Event';
+import { Tag } from '../../+types/tag';
 
 function GoalCard(props: any) {
 
-  const goal: Goal = props.goal
+  const goal: any = props.goal
 
   const numTags: number = goal === null ? 0 : goal.tags.length < 3 ? goal.tags.length : 3;
   
@@ -29,8 +30,8 @@ function GoalCard(props: any) {
             <div className="description">{goal.description}</div>
             <div className="tag-holder">
               {
-                goal.tags.slice(0, numTags).map((tag: string, idx: number) => 
-                  <div className="tag" key={idx}>{tag}</div>
+                goal.tags.slice(0, numTags).map((tag: Tag, idx: number) => 
+                  <div className="tag" key={idx}>{tag.text}</div>
                 )
               }
             </div>
@@ -45,7 +46,8 @@ function GoalCard(props: any) {
     </div>
   )
 
-  function formateDate(date: Date) {
+  function formateDate(dateString: string) {
+    const date = new Date(dateString);
     const yyyy = date.getFullYear();
     const mm = date.getMonth() + 1; // Months start at 0!
     const dd = date.getDate();

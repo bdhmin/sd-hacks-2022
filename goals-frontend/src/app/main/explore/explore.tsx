@@ -5,10 +5,12 @@ import './explore.css';
 import { Goal } from '../../+types/goal';
 import { Tag } from '../../+types/tag';
 import { Autocomplete, TextField } from '@mui/material';
+import GoalCard from '../../shared/goal-card/goal-card';
 
 function Explore() {
+    const userId = localStorage.getItem('currentUserId');
 
-    const [goals, setGoals] = useState<Goal[]>([]);
+    const [goals, setGoals] = useState<any[]>([]);
     const [tags, setTags] = useState<string[]>([]);
     const [filteredTags, setFilteredTags] = useState<string[]>([]);
 
@@ -118,14 +120,30 @@ function Explore() {
 
     useEffect(() => {
       // get all goals where creator is not equal to current user
-      setGoals(goalData)
+      // setGoals(goalData)
   
       // get all tags
       setTags(tagData);
 
-    }, [])
+      axios.get('/api/goals/explore/' + userId)
+      .then((result: any) => {
+        console.log("result", result)
+        setGoals(result['data'])
+      })
+      .catch((_: any) => {
+        console.log("ERROR")
+      })
 
+    }, [])
+    
     // if the user is filtering by tags, filter goals by tag
+    function filteredGoals() {
+      if (filteredTags.length === 0) {
+        return goals
+      } else {
+        return []
+      }
+    }
 
     return (
       <div className="explore">
@@ -133,6 +151,7 @@ function Explore() {
           multiple
           id="tags-outlined"
           options={tags}
+          getOptionLabel={(option) => option.text}
           filterSelectedOptions
           renderInput={(params) => (
             <TextField
@@ -145,8 +164,16 @@ function Explore() {
             setFilteredTags(newTags);
           }}
         />
+        <div>
+          {
+            filteredGoals().map((goal: Goal, idx: number) => {
+              return <GoalCard goal={goal} key={idx}></GoalCard>
+            })
+          }
+        </div>
       </div>
     )
+
 
 }
 

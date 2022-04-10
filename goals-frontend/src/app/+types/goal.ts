@@ -1,3 +1,4 @@
+import { Tag } from "./tag";
 import { User } from "./user";
 
 export interface Goal {
@@ -12,10 +13,10 @@ export interface Goal {
 
     subgoals: Goal[],
     depth: number,
-    tags: string[],
+    tags: Tag[],
 
-    followers: string[],
+    followers: User[],
     follower_count: number,
-    inspired_goals: string[]
+    inspired_goals: Goal[]
     inspired_by: Goal | null,
 }
