@@ -1,0 +1,79 @@
+.ball {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.checked {
+    background-color: rgb(207, 207, 207);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.todo {
+    background-color: aquamarine;
+}
+
+.line-node {
+    position: relative;
+    width: 400px;
+    height: 150px;
+    /* border: 1px solid red; */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: start;
+}
+
+.title {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.desc {
+    font-size: 12px;
+}
+
+.passed, .current, .passed-child, .current-child {
+    width: 240px;
+    height: 90px;
+    margin-left: 80px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    border-radius: 5px;
+}
+
+.passed-child, .current-child {
+    height: 50px;
+}
+
+.passed, .passed-child {
+    background-color: rgb(163, 163, 163);
+    text-decoration: line-through;
+    font-style: italic;
+}
+
+.passed-child {
+    background-color: rgb(223, 223, 223);
+}
+
+.current, .current-child {
+    background-color: rgb(143, 155, 246);
+}
+
+.current-child {
+    background-color: rgb(191, 214, 252);
+}
+
+.vert-bar {
+    position: absolute;
+    margin-left: 15px;
+    z-index: -1;
+    width: 8px;
+    height: inherit;
+    background-color: rgb(255, 232, 204);
+}
