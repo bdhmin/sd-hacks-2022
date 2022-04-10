@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import ReactDOM from 'react-dom';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import './explore.css';
 import { Goal } from '../../+types/goal';
 import { Tag } from '../../+types/tag';
 import { Autocomplete, TextField } from '@mui/material';
 import GoalCard from '../../shared/goal-card/goal-card';
-import { findRenderedDOMComponentWithTag } from 'react-dom/test-utils';
 
 function Explore() {
     const userId = localStorage.getItem('currentUserId');

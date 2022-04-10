@@ -22,7 +22,45 @@ function Timeline() {
       'start_date': new Date(2022, 11, 17),
       'end_date': new Date(2022, 11, 17),
 
-      'subgoals': ['foo1', 'foo2'],
+      'subgoals': [
+        {'_id': 'bar',
+        '_creatorId': null,
+       'title': 'Finish Homework',
+       'description': 'Needa do that homework',
+       'start_date': new Date(2022, 11, 18),
+       'end_date': new Date(2022, 11, 18),
+ 
+       'subgoals': [],
+       '_parentId': "",
+       'depth': 0,
+       'tags': [],
+ 
+       'followers': [],
+       'follower_count': 4,
+ 
+       'inspired_goals': [],
+       'inspired_by': null,
+       },
+       {
+           '_id': 'foo2',
+           'title': 'Not Subgoal 2',
+           'description': 'This is the second subgoal for sd hacks 2022',
+           '_creatorId': 'Udo',
+           'start_date': new Date(2022, 10, 4),
+           'end_date': new Date(2022, 10, 4),
+     
+           'subgoals': [],
+           '_parentId': "",
+           'depth': 0,
+           'tags': [],
+     
+           'followers': [],
+           'follower_count': 0,
+     
+           'inspired_goals': [],
+           'inspired_by': null,
+         }
+      ],
       '_parentId': "",
       'depth': 0,
       'tags': ['education', 'hackathon', 'computer science', 'learning'],
