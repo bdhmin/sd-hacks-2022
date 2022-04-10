@@ -10,12 +10,19 @@ import { Goal } from '../../+types/goal';
 function CreateGoal() {
   const userId = localStorage.getItem('currentUserId');
 
+  // Goal Content
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [end_date, setEnd_date] = useState<Date | null>(null);
-  const [subgoals, setSubgoals] = useState([]);
+  const [subgoals, setSubgoals] = useState<Goal[]>([]);
+  
+  // Subgoal Content
+  const [isCreatingSubgoal, setIsCreatingSubgoal] = useState(false);
+  const [subgoalTitle, setSubgoalTitle] = useState('');
+  const [subgoalDescription, setSubgoalDescription] = useState('');
+  const [subgoalEnd_date, setSubgoalEnd_date] = useState<Date | null>(null);
 
-  const goal = {
+  const emptyGoal = {
     _creatorId: userId,
     _parentId: '',
     title: '',
@@ -30,14 +37,43 @@ function CreateGoal() {
     inspired_goals: [],
   }
 
-  function postGoal() {
-    // Set start date on submission.
-    goal.title = title;
-    goal.description = description;
-    goal.start_date = new Date();
-    goal.end_date = end_date ? end_date : new Date();
+  function createSubgoal() {
+    setIsCreatingSubgoal(true);
+  }
 
-    axios.post('/api/goals', goal)
+  function addSubgoal() {
+    let subgoal = {...emptyGoal}; // Hardcopy of empty goal
+    subgoal.depth = 1;
+    subgoal.title = subgoalTitle;
+    subgoal.description = subgoalDescription;
+    subgoal.end_date = subgoalEnd_date ? subgoalEnd_date : new Date();
+    setSubgoals([...subgoals, subgoal])
+    console.log('added a subgoal', subgoals)
+    setIsCreatingSubgoal(false);
+    setSubgoalTitle('');
+    setSubgoalDescription('');
+    setSubgoalEnd_date(null);
+  }
+
+  function getSubgoals() {
+    var x = [];
+    for (let subgoal of subgoals) {
+      x.push(
+        <h6>Subgoal: {subgoal.title} - {subgoal.description}</h6>
+      );
+    }
+    return x;
+  }
+
+  function postGoal() {
+    let newGoal: Goal = {...emptyGoal} // Hardcopy of empty goal
+    // Set start date on submission.
+    newGoal.title = title;
+    newGoal.description = description;
+    newGoal.start_date = new Date();
+    newGoal.end_date = end_date ? end_date : new Date();
+
+    axios.post('/api/goals', newGoal)
       .then((_: any) => {
         console.log('Successfully created goal');
       })
@@ -59,6 +95,25 @@ function CreateGoal() {
       <p>Completion Date</p>
       <DatePicker selected={end_date} onChange={(date) => setEnd_date(date)} />
 
+      <p>Subgoals</p>
+      {(getSubgoals())}
+
+      {isCreatingSubgoal ? (
+        <div>
+            <p>Goal Title</p>
+            <input type='text' value={subgoalTitle} onChange={(event) => setSubgoalTitle(event.target.value)}></input>
+            <p>Description</p>
+            <input type='text' value={subgoalDescription} onChange={(event) => setSubgoalDescription(event.target.value)}></input>
+
+            <p>Completion Date</p>
+            <DatePicker selected={subgoalEnd_date} onChange={(date) => setSubgoalEnd_date(date)} />
+            <button onClick={() => addSubgoal()}>Add subgoal</button>
+        </div>
+      ) : (
+        <button onClick={() => createSubgoal()}>Create a subgoal</button>
+      )}
+
+      <br/>
       <button onClick={() => postGoal()}>Create Goal</button>
 
     </div>

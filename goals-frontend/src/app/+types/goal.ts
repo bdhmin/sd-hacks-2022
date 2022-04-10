@@ -1,5 +1,5 @@
 export interface Goal {
-    _creatorId: string,
+    _creatorId: string | null,
     _parentId: string,
 
     title: string,
