@@ -23,6 +23,7 @@ function CreateGoal() {
   const [subgoalEnd_date, setSubgoalEnd_date] = useState<Date | null>(null);
 
   const emptyGoal: Goal = {
+    _id: '',
     _creatorId: userId,
     _parentId: '',
     title: '',

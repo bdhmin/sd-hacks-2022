@@ -1,0 +1,110 @@
+.goalcard {
+    width: 400px;
+    max-height: 500px;
+    border: 1px solid rgb(151, 151, 151);
+    border-radius: 5px;
+    overflow-y: auto;
+}
+
+.none-selected {
+    height: 500px;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(151, 151, 151);
+}
+
+.inspiredGoal {
+    margin-left: 45px;
+    margin-right: 45px;
+    font-size: 14px;
+    font-style: italic;
+    text-align: start;
+    margin-bottom: 20px;
+}
+
+.inspired-link {
+    text-decoration: underline;
+}
+
+.inspired-link:hover {
+    cursor: pointer;
+    color: rgb(116, 116, 116);
+}
+
+.tag {
+    background-color: aquamarine;
+    border: 1px solid rgb(151, 151, 151);
+    height: 20px;
+    padding: 5px 10px;
+    border-radius: 20px;
+    margin: 5px;
+}
+
+.tag-holder {
+    margin-bottom: 10px;
+    margin-top: 5px;
+    margin-left: 45px;
+    margin-right: 45px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.descript-head {
+    font-style: italic;
+    padding: 2px 45px;
+    text-align: start;
+}
+
+.description {
+    font-size: 20px;
+    padding: 5px 45px;
+    text-align: start;
+}
+
+.stats {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    font-style: italic;
+}
+
+.forum-link {
+    text-decoration: underline;
+}
+
+.forum-link:hover {
+    cursor: pointer;
+    color: rgb(116, 116, 116);
+}
+
+.event-deadline {
+    display: flex;
+}
+
+.old, .curr, .old-child, .curr-child {
+    height: 80px;
+    font-size: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.old {
+    background-color: rgb(163, 163, 163);
+}
+
+.old-child {
+    background-color: rgb(223, 223, 223);
+}
+
+.curr {
+    background-color: rgb(143, 155, 246);
+}
+
+.curr-child {
+    background-color: rgb(191, 214, 252);
+}
