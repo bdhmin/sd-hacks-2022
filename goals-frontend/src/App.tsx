@@ -6,6 +6,8 @@ import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import Landing from './app/main/landing/landing';
 import Timeline from './app/main/timeline/timeline';
 import CreateAccount from './app/user-setup/create-account/create-account';
+import Navbar from './app/shared/navbar/navbar';
+import CreateGoal from './app/main/create-goal/create-goal';
 
 function App() {
 
@@ -40,10 +42,12 @@ function App() {
 
       {/* Routing */}
       <Router>
+        <Navbar />
         <Routes>
           <Route path='/' element={ <Landing/> }/>
           <Route path='/create-account' element={ <CreateAccount/> }/>
-          <Route path='/timeline/:userId' element={ <Timeline/> }/>
+          <Route path='/timeline' element={ <Timeline/> }/>
+          <Route path='/create-goal' element={ <CreateGoal/> }/>
         </Routes>
       </Router>
     </div>

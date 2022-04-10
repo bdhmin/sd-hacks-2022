@@ -10,6 +10,8 @@ import GoalCard from '../../shared/goal-card/goal-card';
 function Timeline() {
   const [currGoal, setCurrGoal] = useState<any>(null);
   
+  const userId = localStorage.getItem('currentUserId');
+
   const goalData = [
     {
       '_id': 'foo',

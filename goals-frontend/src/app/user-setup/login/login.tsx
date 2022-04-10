@@ -23,7 +23,8 @@ function Login() {
           setCanLogin(false);
         } else {
           setCanLogin(true);
-          navigate('/timeline/' + response.data._id);
+          localStorage.setItem('currentUserId', response.data._id);
+          navigate('/timeline');
         }
       })
       .catch((_: any) => {
