@@ -285,3 +285,23 @@ def getSubgoals(parentId):
         formattedGoals.append(formGoal)
 
     return formattedGoals
+
+@goal.route('/updatef', methods=['POST'])
+def update():
+    body = request.json
+
+    for id in body['ids']:
+        g = db['goals'].find_one({'_id': ObjectId(id)})
+
+        if g is not None:
+            db['goals'].update_one(
+                {'_id': ObjectId(id)},
+                {
+                    "$set": {
+                        "follower_count": g['follower_count'] + 1,
+                    }
+                }
+            )
+    return jsonify({
+        'status': 'Goals updated'
+    })

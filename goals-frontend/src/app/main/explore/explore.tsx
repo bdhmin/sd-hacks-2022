@@ -5,6 +5,7 @@ import { Goal } from '../../+types/goal';
 import { Tag } from '../../+types/tag';
 import { Autocomplete, TextField } from '@mui/material';
 import GoalCard from '../../shared/goal-card/goal-card';
+import Alert from '@mui/material/Alert';
 
 function Explore() {
     const userId = localStorage.getItem('currentUserId');
@@ -73,7 +74,7 @@ function Explore() {
     return (
       <div className="explore">
         <div className="explore-head">Explore Goals</div>
-        <h3>If you see a goal you like, click on it to follow!</h3>
+        <h3>If you see a goal you like, click on it to follow along!</h3>
         <div className="explore-auto">
           <Autocomplete
             multiple
@@ -104,7 +105,38 @@ function Explore() {
     )
 
     function followGoal(goal: Goal) {
-      
+      const newGoal = {...goal}
+
+      const toAddFollower = [goal._id, ]
+      newGoal._id = ''
+      newGoal._creatorId = userId
+      newGoal.inspired_by = goal
+
+      newGoal.subgoals.forEach((subgoal, idx) => {
+        toAddFollower.push(subgoal._id)
+        newGoal.subgoals[idx]._id = ''
+        newGoal.subgoals[idx].inspired_by = goal.subgoals[idx]
+      })
+
+      axios.post('/api/goals', newGoal)
+      .then((_: any) => {
+        console.log('Successfully created goal');
+        // <Alert severity="success">Followed the goal! Check it out in your timeline</Alert>
+      })
+      .catch((_: any) => {
+        console.log('error posting goal');
+      })
+
+      axios.post('/api/goals/updatef', {
+        ids: toAddFollower
+      })
+      .then((_: any) => {
+        console.log('Successfully udpated');
+        // <Alert severity="success">You can now access this goal's forum!</Alert>
+      })
+      .catch((_: any) => {
+        console.log('error udateing');
+      })
     }
 
 
