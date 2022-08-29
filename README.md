@@ -3,7 +3,7 @@
 
 **Created by**: [Bryan Min](https://github.com/bdhmin) | [Jessalyn Wang](https://github.com/JessalynWang) | [Matthew Tan](https://github.com/Tantime) | Ann Luong
 
-[Devpost](https://devpost.com/software/marathon-gsz8to)
+**Links**: [Devpost](https://devpost.com/software/marathon-gsz8to) | [Figma](https://www.figma.com/file/MhiWTVQkuJjwhf6muK5D3Z/Untitled?node-id=0%3A1)
 
 ![Maintain](https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/001/901/846/datas/gallery.jpg)
 
